@@ -4,7 +4,7 @@
 
 This document outlines the steps taken to set up an SSH key pair, configure SSH authentication, set up Nginx, and link the SSH key with GitHub.
 
-- [x] Generated SSH key  
+- [x] [Generated SSH key](#ssh-key-pair-setup)  
 - [x] Added public key to server  
 - [x] Configured SSH access / updated the config file
 - [x] SSH Alias setup
@@ -14,25 +14,29 @@ This document outlines the steps taken to set up an SSH key pair, configure SSH 
 - [x] Authenticated with GitHub
 - [x] Cloned Git Repository
 
-## 1. SSH Key Pair Setup
+## SSH Key Pair Setup
 
 1. Created an SSH key pair using the command:
 
+   ```bash
    ssh-keygen -t ~/.ssh/demo_ed25519 -C "DA live call demo key"
+   ```
    
-2. Used ssh-copy-id to add the public key to the remote server for passwordless login:
+1. Used ssh-copy-id to add the public key to the remote server for passwordless login:
    ssh-copy-id username@host
 
-3. Updated the SSH server configuration file (/etc/ssh/sshd_config) to allow login only via SSH key, disabling password-based login:
+1. Test ssh connection before disabling password-nased login:
+
+1. Updated the SSH server configuration file (/etc/ssh/sshd_config) to allow login only via SSH key, disabling password-based login:
    "PasswordAuthentication" = no
 
-4. Restarted the SSH service to apply the changes:
+1. Restarted the SSH service to apply the changes:
    sudo systemctl restart sshd
 
-5. Successfully logged in to the server using the SSH key (passwordless login).
+1. Successfully logged in to the server using the SSH key (passwordless login).
 
 
-## 2. Install Webserver NGINX Configuration
+## Install Webserver NGINX Configuration
 
 1. Installed Webserver NGINX and set up a basic webpage.
 2. Created a custom Nginx page by editing the default HTML content in /var/www/html/index.html:
@@ -40,12 +44,12 @@ This document outlines the steps taken to set up an SSH key pair, configure SSH 
 3. Ensured the Nginx service was running:
    sudo systemctl start nginx
 
-## 3. SSH Alias Setup
+## SSH Alias Setup
 
   Created an SSH alias to avoid using the full path to the SSH key every time:
    alias dal_connect="ssh -o StrictHostKeyChecking=False -i ~/home/macUserName/.ssh/id_ed25519 username@host
 
-## 4. Adding SSH Key to GitHub
+## Adding SSH Key to GitHub
 
 1. Added the public SSH key to GitHub to authenticate Git operations from the server:
     Retrieved the public key using:
